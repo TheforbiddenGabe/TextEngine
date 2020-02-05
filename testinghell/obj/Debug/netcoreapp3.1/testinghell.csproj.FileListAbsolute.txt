@@ -1,0 +1,11 @@
+C:\Users\gabachman20\source\repos\testinghell\testinghell\bin\Debug\netcoreapp3.1\testinghell.exe
+C:\Users\gabachman20\source\repos\testinghell\testinghell\bin\Debug\netcoreapp3.1\testinghell.deps.json
+C:\Users\gabachman20\source\repos\testinghell\testinghell\bin\Debug\netcoreapp3.1\testinghell.runtimeconfig.json
+C:\Users\gabachman20\source\repos\testinghell\testinghell\bin\Debug\netcoreapp3.1\testinghell.runtimeconfig.dev.json
+C:\Users\gabachman20\source\repos\testinghell\testinghell\bin\Debug\netcoreapp3.1\testinghell.dll
+C:\Users\gabachman20\source\repos\testinghell\testinghell\bin\Debug\netcoreapp3.1\testinghell.pdb
+C:\Users\gabachman20\source\repos\testinghell\testinghell\obj\Debug\netcoreapp3.1\testinghell.csprojAssemblyReference.cache
+C:\Users\gabachman20\source\repos\testinghell\testinghell\obj\Debug\netcoreapp3.1\testinghell.AssemblyInfoInputs.cache
+C:\Users\gabachman20\source\repos\testinghell\testinghell\obj\Debug\netcoreapp3.1\testinghell.AssemblyInfo.cs
+C:\Users\gabachman20\source\repos\testinghell\testinghell\obj\Debug\netcoreapp3.1\testinghell.dll
+C:\Users\gabachman20\source\repos\testinghell\testinghell\obj\Debug\netcoreapp3.1\testinghell.pdb
