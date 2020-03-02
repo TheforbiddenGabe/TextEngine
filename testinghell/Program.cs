@@ -1,11 +1,13 @@
-﻿using System;
+using System;
+using System.Linq;
+using System.Windows.Input;
 using System.Text.RegularExpressions;
 
 namespace testing
 {
     class Program
     {
-
+        static Random rnd = new Random();
         public static string[,] fullMap = {
             { "empty", "empty", "empty", "empty", "empty" } ,
             { "empty", "empty", "empty", "empty", "empty" } ,
@@ -14,6 +16,8 @@ namespace testing
             { "empty", "empty", "empty", "empty", "empty" }
             };
 
+        public static readonly string[] allowedCommands = { "up", "left", "down", "right", "hit" };
+        
         public enum Direction
         {
             Up, Down, Left, Right
@@ -23,10 +27,21 @@ namespace testing
 
 
 
-            Player MainPlayer = new Player(2, 2,Direction.Up);
-            _ = new GenericObject(0, 2);
-            _ = new GenericObject(4, 1);
-            _ = new GenericObject(4, 3);
+            Player MainPlayer = new Player(2, 2, Direction.Up);
+            int i = 0;
+            while(i < 5)
+            {
+                int randX = rnd.Next(0, 5);
+                int randY = rnd.Next(0, 5);
+                if (fullMap[randX, randY] == "empty")
+                {
+                    _ = new GenericObject(randX, randY);
+                    i++;
+                }
+                
+            }
+            
+
 
 
 
@@ -64,7 +79,7 @@ namespace testing
                                         Console.Write(">");
                                         break;
                                 }
-                                
+
                                 break;
 
                             case "generic":
@@ -80,28 +95,85 @@ namespace testing
                     drawY++;
                 }
 
+                Console.WriteLine("[{0}]", string.Join(", ", allowedCommands));
+
+                Console.Write("Enter a command: ");
                 string command = Console.ReadLine();
-                int dist = 0;
-                try
+                command = Regex.Replace(command, @"\s+", "").ToLower();
+                if (allowedCommands.Contains(command))
                 {
-                    string rawDist = Regex.Match(Console.ReadLine(), @"\d+").Value;
-                    dist = Int32.Parse(rawDist);
+                    switch (command)
+                    {
+                        case "up":
+                        case "down":
+                        case "left":
+                        case "right":
+                            int dist = 0;
+                            try
+                            {
+                                string rawDist = Regex.Match(Console.ReadLine(), @"\d+").Value;
+                                dist = Int32.Parse(rawDist);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Bad Input");
+                            }
+                            MainPlayer.Move(command, dist);
+                            break;
+                        case "hit":
+                            switch (MainPlayer.Dir)
+                            {
+                                case Direction.Up:
+                                    if (Program.fullMap[MainPlayer.PosX - 1, MainPlayer.PosY] != "empty")
+                                    {
+                                        Program.fullMap[MainPlayer.PosX - 1, MainPlayer.PosY] = "empty";
+                                    } else
+                                    {
+                                        Console.WriteLine("Nothing to hit");
+                                    }
+                                    break;
+                                case Direction.Down:
+                                    if (Program.fullMap[MainPlayer.PosX + 1, MainPlayer.PosY] != "empty")
+                                    {
+                                        Program.fullMap[MainPlayer.PosX + 1, MainPlayer.PosY] = "empty";
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Nothing to hit");
+                                    }
+                                    break;
+                                case Direction.Left:
+                                    if (Program.fullMap[MainPlayer.PosX, MainPlayer.PosY - 1] != "empty")
+                                    {
+                                        Program.fullMap[MainPlayer.PosX, MainPlayer.PosY - 1] = "empty";
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Nothing to hit");
+                                    }
+                                    break;
+                                case Direction.Right:
+                                    if (Program.fullMap[MainPlayer.PosX, MainPlayer.PosY + 1] != "empty")
+                                    {
+                                        Program.fullMap[MainPlayer.PosX, MainPlayer.PosY + 1] = "empty";
+                                    }
+                                    break;
+                            }
+                            break;
+
+                    }
+
                 }
-                catch
+                else
                 {
-                    Console.WriteLine("Bad Input");
+                    Console.WriteLine("Invalid command");
                 }
-                
-
-
-                MainPlayer.Move(command, dist);
-
             }
         }
     }
     class Player : GenericObject
     {
-        
+
 
         public Program.Direction Dir
         { get; set; }
@@ -112,7 +184,7 @@ namespace testing
             PosX = x;
             PosY = y;
 
-            AddObject(x,y);
+            AddObject(x, y);
         }
 
 
@@ -166,6 +238,8 @@ namespace testing
                         Console.WriteLine("Out Of Bounds");
                     }
                     break;
+
+                    
 
                 case "up":
                     if (this.PosX - a <= 5)
@@ -221,10 +295,7 @@ namespace testing
             Program.fullMap[tX, tY] = "generic";
         }
 
-        
+
 
     }
 }
-
-
-
